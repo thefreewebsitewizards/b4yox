@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deepCharcoal: '#1A1A1A',
+                        brightWhite: '#FFFFFF',
+                        neonPink: '#B54BFF',
+                        phantomTeal: '#2AF598',
+                        electricPurple: '#8A2BE2',
+                        darkGray: '#333333',
+                        lightGray: '#CCCCCC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 0 10px rgba(181, 75, 255, 0.7);
+            }
+            .btn-glow:hover {
+                box-shadow: 0 0 15px rgba(181, 75, 255, 0.7);
+            }
+            .border-glow {
+                box-shadow: 0 0 20px rgba(181, 75, 255, 0.3);
+            }
+        }
+    </style>
+</head>
+<body class="bg-deepCharcoal text-brightWhite min-h-screen flex flex-col items-center justify-center p-4">
+    <h1 class="text-3xl font-bold mb-8 text-center">Modal Functionality Test</h1>
+    
+    <!-- Coming Soon Modal Trigger Button -->
+    <div class="text-center">
+        <button id="comingSoonTrigger" class="inline-flex items-center px-6 py-3 border border-neonPink bg-neonPink/20 text-neonPink font-medium rounded-md hover:bg-neonPink/30 transition-all duration-300">
+            <i class="fa fa-gift mr-2"></i>
+            Special Announcement
+        </button>
+    </div>
+
+    <!-- Coming Soon Pop-up Modal -->
+    <div id="comingSoonModal" class="fixed inset-0 bg-deepCharcoal/90 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Modal Container -->
+        <div id="modalContent" class="bg-gradient-to-br from-deepCharcoal to-deepCharcoal/80 rounded-2xl shadow-[0_0_40px_rgba(181,75,255,0.3)] overflow-hidden max-w-3xl w-full max-h-[90vh] flex flex-col transform transition-all duration-500 scale-95">
+            <!-- Close Button -->
+            <div class="absolute top-4 right-4 z-10">
+                <button id="closeModal" class="w-10 h-10 rounded-full bg-deepCharcoal/70 text-brightWhite hover:bg-neonPink transition-colors duration-300 flex items-center justify-center">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-8 md:p-12 flex-1 overflow-y-auto">
+                <!-- Modal Header -->
+                <div class="flex flex-col items-center mb-8">
+                    <span class="inline-block px-4 py-1 rounded-full bg-neonPink/20 text-neonPink text-sm font-medium mb-4">
+                        SNEAK PEEK: NEW RELEASE
+                    </span>
+                    <h2 class="text-[clamp(1.5rem,5vw,2.5rem)] font-bold text-center mb-4 animate-pulse">
+                        <span class="text-shadow">CUSTOM PHANTOM MODE</span>
+                    </h2>
+                    <p class="text-brightWhite/80 text-center max-w-xl">
+                        Get ready to customize your very own PHANTOM APPAREL SNAPBACK with exclusive designs and personalized touches.
+                    </p>
+                </div>
+
+                <!-- Modal Features -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-darkGray/50 p-6 rounded-xl text-center transform hover:scale-105 transition-transform duration-300">
+                        <div class="w-12 h-12 bg-neonPink/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-paint-brush text-neonPink text-xl"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">Exclusive Designs</h3>
+                        <p class="text-sm text-brightWhite/70">Limited edition patterns and artwork</p>
+                    </div>
+                    <div class="bg-darkGray/50 p-6 rounded-xl text-center transform hover:scale-105 transition-transform duration-300">
+                        <div class="w-12 h-12 bg-neonPink/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-palette text-neonPink text-xl"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">Custom Colors</h3>
+                        <p class="text-sm text-brightWhite/70">Choose from our premium color palette</p>
+                    </div>
+                    <div class="bg-darkGray/50 p-6 rounded-xl text-center transform hover:scale-105 transition-transform duration-300">
+                        <div class="w-12 h-12 bg-neonPink/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-star text-neonPink text-xl"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">Limited Quantity</h3>
+                        <p class="text-sm text-brightWhite/70">Be the first to secure your custom cap</p>
+                    </div>
+                </div>
+
+                <!-- Modal Call to Action -->
+                <div class="text-center">
+                    <p class="text-brightWhite/70 mb-6">
+                        Sign up now to get early access to our customization platform and be notified when it launches!
+                    </p>
+                    <button class="px-8 py-3 bg-neonPink text-deepCharcoal font-bold rounded-md hover:bg-electricPurple transition-colors duration-300 btn-glow flex items-center justify-center mx-auto">
+                        <i class="fa fa-rocket mr-2"></i>
+                        GET EARLY ACCESS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal JavaScript -->
+    <script>
+        // Simplified and more reliable modal implementation
+        // Using window.onload to ensure all elements are fully loaded
+        window.onload = function() {
+            // Get elements using direct IDs for better reliability
+            const modal = document.getElementById('comingSoonModal');
+            const trigger = document.getElementById('comingSoonTrigger');
+            const closeBtn = document.getElementById('closeModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            console.log('Modal elements loaded:', { modal, trigger, closeBtn, modalContent });
+            
+            // Open modal function - simplified
+            function openModal() {
+                console.log('Opening modal...');
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                // Add a small delay for the opacity transition
+                setTimeout(() => {
+                    modalContent.style.transform = 'scale(1)';
+                }, 50);
+                // Prevent scrolling when modal is open
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Close modal function - simplified
+            function closeModal() {
+                console.log('Closing modal...');
+                modalContent.style.transform = 'scale(0.95)';
+                // Match the transition duration in CSS
+                setTimeout(() => {
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    // Re-enable scrolling when modal is closed
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+
+            // Success pop-up function
+            function showSuccessPopUp() {
+                console.log('Showing success pop-up...');
+                // Create and show success pop-up
+                const successPopUp = document.createElement('div');
+                successPopUp.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-deepCharcoal border-2 border-phantomTeal rounded-lg p-8 shadow-[0_0_30px_rgba(181,75,255,0.5)] z-50 flex flex-col items-center';
+                successPopUp.innerHTML = `
+                    <div class="w-16 h-16 bg-gradient-to-br from-phantomTeal/30 to-electricPurple/30 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-phantomTeal/20">
+                        <svg class="w-8 h-8 text-phantomTeal animate-pulse" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-brightWhite mb-2">SUCCESS!</h3>
+                    <p class="text-brightWhite/80 text-center mb-6">You've been added to the early access list!</p>
+                    <button id="thanksBtn" class="px-6 py-2 bg-phantomTeal text-deepCharcoal font-bold rounded-md hover:bg-electricPurple transition-colors duration-300">
+                        THANKS
+                    </button>
+                `;
+                
+                document.body.appendChild(successPopUp);
+                
+                // Add event listener to close button
+                const thanksBtn = document.getElementById('thanksBtn');
+                thanksBtn.onclick = function() {
+                    successPopUp.remove();
+                    closeModal();
+                };
+            }
+
+            // Add event listener for the Special Announcement button with error handling
+            if (trigger && modal && modalContent) {
+                // Using onclick property for maximum compatibility
+                trigger.onclick = function() {
+                    openModal();
+                    // Add console log for debugging
+                    console.log('Modal opened via Special Announcement button');
+                };
+                
+                // Fix close button functionality
+                closeBtn.onclick = function() {
+                    closeModal();
+                };
+
+                // Close modal when clicking outside the modal content
+                modal.onclick = function(e) {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                };
+
+                // Close modal with Escape key
+                document.onkeydown = function(e) {
+                    if (e.key === 'Escape' && !modal.classList.contains('pointer-events-none')) {
+                        closeModal();
+                    }
+                };
+
+                // Add early access button functionality
+                const buttons = document.querySelectorAll('button');
+                for (let i = 0; i < buttons.length; i++) {
+                    if (buttons[i].textContent.includes('GET EARLY ACCESS')) {
+                        buttons[i].onclick = showSuccessPopUp;
+                        break;
+                    }
+                }
+
+                // Auto-show modal after 3 seconds for testing
+                setTimeout(openModal, 3000);
+                console.log('Modal will auto-show after 3 seconds');
+            } else {
+                console.error('One or more modal elements not found');
+            }
+        };
+    </script>
+</body>
+</html>
