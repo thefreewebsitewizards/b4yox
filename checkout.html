@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Phantom Apparel</title>
+    <link rel="icon" type="image/x-icon" href="assets/hero.JPG">
+    <style>
+        /* Custom Checkout Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        /* Variables */
+        :root {
+            --color-brightWhite: #f8f8f8;
+            --color-deepCharcoal: #1a1a1a;
+            --color-phantomTeal: #00d4aa;
+            --color-electricPurple: #8b5cf6;
+            --color-neonPink: #ff6b9d;
+        }
+        
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-deepCharcoal);
+            color: var(--color-brightWhite);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(153, 0, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 0, 255, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+        
+        /* Form elements styling */
+        input:focus,
+        select:focus {
+            border-color: var(--color-phantomTeal) !important;
+            box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.2);
+        }
+        
+        /* Radio button styling */
+        input[type="radio"] {
+            accent-color: var(--color-phantomTeal);
+        }
+        
+        /* Button animations */
+        button {
+            transition: all 0.3s ease;
+        }
+        
+        /* Security Badge Animation */
+        .security-badge {
+            animation: securityPulse 4s infinite;
+            transition: all 0.3s ease;
+        }
+        
+        @keyframes securityPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0); }
+            50% { box-shadow: 0 0 0 8px rgba(0, 212, 170, 0.05); }
+        }
+        
+        .security-badge:hover {
+            border-color: var(--color-phantomTeal);
+            box-shadow: 0 0 15px rgba(0, 212, 170, 0.1);
+        }
+        
+        /* Payment logos hover effect */
+        .payment-logo {
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        /* Card animation */
+        .card-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 170, 0.05), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 212, 170, 0.15);
+            border-color: var(--color-phantomTeal);
+        }
+        
+        .card-hover:hover::before {
+            left: 100%;
+        }
+        
+        /* Order item hover */
+        .order-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .order-item:hover {
+            background-color: rgba(0, 212, 170, 0.05);
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 212, 170, 0.1);
+        }
+        
+        .order-item img {
+            transition: all 0.3s ease;
+        }
+        
+        .order-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Form labels */
+        label {
+            transition: all 0.2s ease;
+        }
+        
+        /* Success animation */
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .success-icon {
+            animation: successPulse 0.6s ease;
+        }
+        
+        /* Checkout progress indicator */
+        .progress-step {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step:hover {
+            transform: translateY(-2px);
+        }
+        
+        .progress-step div {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .progress-step div::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background-color: rgba(0, 212, 170, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step:hover div::after {
+            width: 150%;
+            height: 150%;
+        }
+        
+        .progress-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -25px;
+            width: 50px;
+            height: 2px;
+            background-color: var(--color-electricPurple);
+            transform: translateY(-50%);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .progress-step:not(:last-child)::after {
+                display: none;
+            }
+            
+            .progress-step p {
+                display: none;
+            }
+            
+            .progress-step div {
+                width: 8px;
+                height: 8px;
+            }
+            
+            .flex.space-x-10.md\:space-x-20 {
+                justify-content: space-between;
+            }
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deepCharcoal: '#1a1a1a',
+                        brightWhite: '#f8f8f8',
+                        phantomTeal: '#00d4aa',
+                        electricPurple: '#8b5cf6',
+                        neonPink: '#ff6b9d'
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-conic': 'conic-gradient(from 225deg, var(--tw-gradient-stops))'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-deepCharcoal text-brightWhite min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-deepCharcoal/95 backdrop-blur-sm border-b border-electricPurple/20 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <img src="assets/hero.JPG" alt="Phantom Apparel Logo" class="w-8 h-8 rounded object-cover">
+                    <a href="index.html" class="text-2xl font-bold tracking-wider">
+                        <span class="text-phantomTeal hover:text-neonPink transition-colors duration-200">PHANTOM</span>
+                        <span class="text-brightWhite">APPAREL</span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <a href="shop.html" class="text-brightWhite hover:text-phantomTeal transition-colors duration-200">
+                        <i data-feather="arrow-left" class="w-5 h-5 inline mr-2"></i>
+                        Back to Shop
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative bg-gradient-to-r from-electricPurple/20 to-neonPink/20 py-10">
+        <div class="absolute inset-0 overflow-hidden opacity-10">
+            <img src="assets/hero.JPG" alt="Background" class="w-full h-full object-cover object-center blur-sm">
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-brightWhite">Secure Checkout</h1>
+            <p class="mt-2 text-brightWhite/80">Complete your order securely</p>
+        </div>
+    </div>
+    
+    <!-- Checkout Progress -->
+    <div class="max-w-6xl mx-auto px-4 py-6">
+        <div class="flex justify-center items-center space-x-10 md:space-x-20">
+            <div class="progress-step text-center">
+                <div class="w-10 h-10 rounded-full bg-phantomTeal flex items-center justify-center mx-auto mb-2">
+                    <i data-feather="user" class="w-5 h-5 text-deepCharcoal"></i>
+                </div>
+                <p class="text-sm text-brightWhite font-medium">Information</p>
+            </div>
+            <div class="progress-step text-center">
+                <div class="w-10 h-10 rounded-full bg-electricPurple flex items-center justify-center mx-auto mb-2">
+                    <i data-feather="truck" class="w-5 h-5 text-brightWhite"></i>
+                </div>
+                <p class="text-sm text-brightWhite font-medium">Shipping</p>
+            </div>
+            <div class="progress-step text-center">
+                <div class="w-10 h-10 rounded-full bg-neonPink flex items-center justify-center mx-auto mb-2">
+                    <i data-feather="credit-card" class="w-5 h-5 text-deepCharcoal"></i>
+                </div>
+                <p class="text-sm text-brightWhite font-medium">Payment</p>
+            </div>
+            <div class="progress-step text-center">
+                <div class="w-10 h-10 rounded-full bg-brightWhite/10 border border-brightWhite/30 flex items-center justify-center mx-auto mb-2">
+                    <i data-feather="check" class="w-5 h-5 text-brightWhite/60"></i>
+                </div>
+                <p class="text-sm text-brightWhite/60">Complete</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Content -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Security Badge -->
+    <div class="flex justify-center items-center mb-8 bg-deepCharcoal/30 py-3 px-6 rounded-lg border border-electricPurple/10 security-badge">
+        <i data-feather="shield" class="w-5 h-5 text-phantomTeal mr-2"></i>
+        <span class="text-brightWhite/80 text-sm">Secure checkout powered by Phantom SecurePay</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="w-8 h-auto ml-4 payment-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="w-8 h-auto ml-2 payment-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="w-8 h-auto ml-2 payment-logo">
+    </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Checkout Form -->
+            <div class="space-y-8">
+                <div>
+                    <div class="flex items-center space-x-2">
+                    <i data-feather="credit-card" class="w-6 h-6 text-phantomTeal"></i>
+                    <h1 class="text-3xl font-bold text-brightWhite mb-2">CHECKOUT</h1>
+                </div>
+                    <p class="text-brightWhite/60">Complete your order below</p>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="bg-deepCharcoal/50 p-6 rounded-lg border border-electricPurple/20 card-hover">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="mail" class="w-5 h-5 text-phantomTeal"></i>
+                        <h2 class="text-xl font-semibold text-brightWhite mb-4">CONTACT INFORMATION</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-brightWhite mb-2">EMAIL ADDRESS</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="your@email.com">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-brightWhite mb-2">FIRST NAME</label>
+                                <input type="text" id="firstName" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="John">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brightWhite mb-2">LAST NAME</label>
+                                <input type="text" id="lastName" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="Doe">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="bg-deepCharcoal/50 p-6 rounded-lg border border-electricPurple/20">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="map-pin" class="w-5 h-5 text-phantomTeal"></i>
+                        <h2 class="text-xl font-semibold text-brightWhite mb-4">SHIPPING ADDRESS</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-brightWhite mb-2">ADDRESS</label>
+                            <input type="text" id="address" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="123 Main Street">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-brightWhite mb-2">CITY</label>
+                                <input type="text" id="city" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="New York">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brightWhite mb-2">ZIP CODE</label>
+                                <input type="text" id="zipCode" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="10001">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-brightWhite mb-2">COUNTRY</label>
+                            <select id="country" class="w-full px-4 py-3 bg-deepCharcoal border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded">
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="AU">Australia</option>
+                                <option value="PH">Philippines</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Options -->
+                <div class="bg-deepCharcoal/50 p-6 rounded-lg border border-electricPurple/20">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="truck" class="w-5 h-5 text-phantomTeal"></i>
+                        <h2 class="text-xl font-semibold text-brightWhite mb-4">SHIPPING METHOD</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between p-4 border border-brightWhite/20 rounded cursor-pointer hover:border-phantomTeal transition-colors duration-200">
+                            <div class="flex items-center">
+                                <input type="radio" name="shipping" value="standard" class="mr-3" checked>
+                                <div>
+                                    <p class="text-brightWhite font-medium">Standard Shipping</p>
+                                    <p class="text-brightWhite/60 text-sm">5-7 business days</p>
+                                </div>
+                            </div>
+                            <span class="text-neonPink font-medium">FREE</span>
+                        </label>
+                        <label class="flex items-center justify-between p-4 border border-brightWhite/20 rounded cursor-pointer hover:border-phantomTeal transition-colors duration-200">
+                            <div class="flex items-center">
+                                <input type="radio" name="shipping" value="express" class="mr-3">
+                                <div>
+                                    <p class="text-brightWhite font-medium">Express Shipping</p>
+                                    <p class="text-brightWhite/60 text-sm">2-3 business days</p>
+                                </div>
+                            </div>
+                            <span class="text-neonPink font-medium">$9.99</span>
+                        </label>
+                        <label class="flex items-center justify-between p-4 border border-brightWhite/20 rounded cursor-pointer hover:border-phantomTeal transition-colors duration-200">
+                            <div class="flex items-center">
+                                <input type="radio" name="shipping" value="overnight" class="mr-3">
+                                <div>
+                                    <p class="text-brightWhite font-medium">Overnight Shipping</p>
+                                    <p class="text-brightWhite/60 text-sm">Next business day</p>
+                                </div>
+                            </div>
+                            <span class="text-neonPink font-medium">$24.99</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="bg-deepCharcoal/50 p-6 rounded-lg border border-electricPurple/20">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="credit-card" class="w-5 h-5 text-phantomTeal"></i>
+                        <h2 class="text-xl font-semibold text-brightWhite mb-4">PAYMENT METHOD</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-3 gap-3">
+                            <label class="flex items-center justify-center p-4 border border-brightWhite/20 rounded cursor-pointer hover:border-phantomTeal transition-colors duration-200">
+                                <input type="radio" name="payment" value="card" class="mr-2" checked>
+                                <span class="text-brightWhite text-sm">Credit Card</span>
+                            </label>
+                            <label class="flex items-center justify-center p-4 border border-brightWhite/20 rounded cursor-pointer hover:border-phantomTeal transition-colors duration-200">
+                                <input type="radio" name="payment" value="paypal" class="mr-2">
+                                <span class="text-brightWhite text-sm">PayPal</span>
+                            </label>
+                            <label class="flex items-center justify-center p-4 border border-brightWhite/20 rounded cursor-pointer hover:border-phantomTeal transition-colors duration-200">
+                                <input type="radio" name="payment" value="gcash" class="mr-2">
+                                <span class="text-brightWhite text-sm">GCash</span>
+                            </label>
+                        </div>
+                        
+                        <div id="card-details" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-brightWhite mb-2">CARD NUMBER</label>
+                                <input type="text" id="cardNumber" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-brightWhite mb-2">EXPIRY DATE</label>
+                                    <input type="text" id="expiryDate" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="MM/YY">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-brightWhite mb-2">CVV</label>
+                                    <input type="text" id="cvv" class="w-full px-4 py-3 bg-transparent border border-brightWhite/20 text-brightWhite focus:border-phantomTeal focus:outline-none rounded" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="lg:sticky lg:top-24 h-fit">
+                <div class="bg-deepCharcoal/50 p-6 rounded-lg border border-electricPurple/20 card-hover">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="shopping-bag" class="w-5 h-5 text-phantomTeal"></i>
+                        <h2 class="text-xl font-semibold text-brightWhite mb-6">ORDER SUMMARY</h2>
+                    </div>
+                    
+                    <div id="checkout-items" class="space-y-4 mb-6">
+                        <!-- Items will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="border-t border-brightWhite/10 pt-4 space-y-2">
+                        <div class="flex justify-between text-brightWhite/60">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-brightWhite/60">
+                            <span>Shipping:</span>
+                            <span id="shipping-cost">FREE</span>
+                        </div>
+                        <div class="flex justify-between text-brightWhite/60">
+                            <span>Tax:</span>
+                            <span id="tax-amount">$0.00</span>
+                        </div>
+                        <div class="border-t border-brightWhite/10 pt-2 flex justify-between text-lg font-semibold text-brightWhite">
+                            <span>Total:</span>
+                            <span id="final-total" class="text-neonPink">$0.00</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="placeOrder()" class="w-full bg-phantomTeal text-deepCharcoal py-4 rounded font-semibold text-lg hover:bg-electricPurple hover:text-brightWhite transition-all duration-200 mt-6">
+                        PLACE ORDER
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Modal -->
+    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-deepCharcoal border border-electricPurple/30 rounded-lg p-8 max-w-md w-full mx-4 text-center">
+            <div class="mb-6">
+                <div class="w-16 h-16 bg-phantomTeal/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="check-circle" class="w-8 h-8 text-phantomTeal"></i>
+                </div>
+                <h3 class="text-2xl font-heading text-brightWhite mb-2">Order Placed Successfully!</h3>
+                <p class="text-brightWhite/80 mb-4">Your order has been confirmed and is being processed.</p>
+            </div>
+            
+            <div class="bg-deepCharcoal/50 rounded-lg p-4 mb-6">
+                <p class="text-sm text-brightWhite/60 mb-1">Order Number:</p>
+                <p id="orderNumber" class="text-lg font-medium text-neonPink"></p>
+            </div>
+            
+            <p class="text-sm text-brightWhite/60 mb-6">You will receive a confirmation email shortly.</p>
+            
+            <div class="space-y-3">
+                <button onclick="trackOrder()" class="w-full bg-phantomTeal hover:bg-phantomTeal/80 text-deepCharcoal font-medium py-3 px-6 rounded-lg transition-all duration-200">
+                    Track Order
+                </button>
+                <button onclick="closeOrderModal()" class="w-full bg-electricPurple hover:bg-neonPink text-brightWhite font-medium py-3 px-6 rounded-lg transition-all duration-200">
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+        
+        // Get cart data from localStorage or URL params
+        let checkoutCart = JSON.parse(localStorage.getItem('phantomCart') || '[]');
+        
+        // Add sample products if cart is empty (for demonstration)
+        if (checkoutCart.length === 0) {
+            checkoutCart = [
+                {
+                    title: 'SPIRIT HUNTER HOODIE',
+                    price: '$64.99',
+                    size: 'M',
+                    quantity: 1,
+                    image: 'assets/product1.jpg'
+                },
+                {
+                    title: 'SPECTRAL DETECTIVE TEE',
+                    price: '$32.99',
+                    size: 'L',
+                    quantity: 1,
+                    image: 'assets/product2.jpg'
+                }
+            ];
+            // Store sample cart in localStorage for demonstration
+            localStorage.setItem('phantomCart', JSON.stringify(checkoutCart));
+        }
+        let subtotal = 0;
+        let shippingCost = 0;
+        let taxRate = 0.08; // 8% tax
+        
+        // Load cart items on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCheckoutItems();
+            updateOrderSummary();
+            
+            // Add event listeners for shipping and payment changes
+            document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+                radio.addEventListener('change', updateOrderSummary);
+            });
+            
+            document.querySelectorAll('input[name="payment"]').forEach(radio => {
+                radio.addEventListener('change', togglePaymentDetails);
+            });
+        });
+        
+        function loadCheckoutItems() {
+            const checkoutItemsContainer = document.getElementById('checkout-items');
+            
+            if (checkoutCart.length === 0) {
+                checkoutItemsContainer.innerHTML = '<p class="text-brightWhite/60 text-center py-4">No items in cart</p>';
+                return;
+            }
+            
+            checkoutItemsContainer.innerHTML = '';
+            subtotal = 0;
+            
+            checkoutCart.forEach(item => {
+                const price = parseFloat(item.price.replace('$', ''));
+                const itemTotal = price * item.quantity;
+                subtotal += itemTotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'flex items-center space-x-4 p-3 bg-deepCharcoal/30 rounded order-item';
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" class="w-16 h-16 object-cover rounded">
+                    <div class="flex-1">
+                        <p class="text-brightWhite font-medium">${item.title}</p>
+                        <p class="text-brightWhite/60 text-sm">Size: ${item.size}</p>
+                        <p class="text-neonPink text-sm">${item.price} x ${item.quantity}</p>
+                    </div>
+                    <p class="text-brightWhite font-medium">$${itemTotal.toFixed(2)}</p>
+                `;
+                checkoutItemsContainer.appendChild(itemElement);
+            });
+        }
+        
+        function updateOrderSummary() {
+            const selectedShipping = document.querySelector('input[name="shipping"]:checked').value;
+            
+            // Calculate shipping cost
+            switch(selectedShipping) {
+                case 'standard':
+                    shippingCost = 0;
+                    break;
+                case 'express':
+                    shippingCost = 9.99;
+                    break;
+                case 'overnight':
+                    shippingCost = 24.99;
+                    break;
+            }
+            
+            const taxAmount = subtotal * taxRate;
+            const finalTotal = subtotal + shippingCost + taxAmount;
+            
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('shipping-cost').textContent = shippingCost === 0 ? 'FREE' : `$${shippingCost.toFixed(2)}`;
+            document.getElementById('tax-amount').textContent = `$${taxAmount.toFixed(2)}`;
+            document.getElementById('final-total').textContent = `$${finalTotal.toFixed(2)}`;
+        }
+        
+        function togglePaymentDetails() {
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            const cardDetails = document.getElementById('card-details');
+            
+            if (selectedPayment === 'card') {
+                cardDetails.style.display = 'block';
+            } else {
+                cardDetails.style.display = 'none';
+            }
+        }
+        
+        function placeOrder() {
+            // Validate form fields
+            const requiredFields = ['email', 'firstName', 'lastName', 'address', 'city', 'zipCode'];
+            let isValid = true;
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#ff6b9d';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            if (!isValid) {
+                showErrorMessage('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate order processing
+            const orderNumber = Math.random().toString(36).substr(2, 9).toUpperCase();
+            
+            showOrderSuccess(orderNumber);
+            
+            // Clear cart
+            localStorage.removeItem('phantomCart');
+        }
+        
+        function showOrderSuccess(orderNumber) {
+            document.getElementById('orderNumber').textContent = orderNumber;
+            document.getElementById('orderModal').classList.remove('hidden');
+            feather.replace();
+        }
+        
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+            window.location.href = 'shop.html';
+        }
+        
+        function trackOrder() {
+            // Show coming soon message
+            const comingSoonDiv = document.createElement('div');
+            comingSoonDiv.className = 'fixed top-4 right-4 bg-phantomTeal text-deepCharcoal px-6 py-3 rounded-lg shadow-lg z-50 font-medium';
+            comingSoonDiv.innerHTML = '<i data-feather="clock" class="w-4 h-4 inline mr-2"></i>Track Order - Coming Soon!';
+            document.body.appendChild(comingSoonDiv);
+            
+            // Replace feather icons
+            feather.replace();
+            
+            setTimeout(() => {
+                comingSoonDiv.remove();
+            }, 3000);
+        }
+        
+        function showErrorMessage(message) {
+            // Create a temporary error modal or use a simple styled alert
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

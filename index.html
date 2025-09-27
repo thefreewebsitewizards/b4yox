@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom Apparel - Limited Drops. Zero Rules.</title>
+    <meta name="description" content="Danny Phantom inspired streetwear - edgy, playful, retro-cartoon aesthetic. Limited drops. Just be you.">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neonPink: '#FF4FA3',
+                        electricPurple: '#B54BFF',
+                        phantomTeal: '#2ED1C1',
+                        deepCharcoal: '#111111',
+                        brightWhite: '#F6F6F6'
+                    },
+                    fontFamily: {
+                        heading: ['"Anton"', 'sans-serif'],
+                        body: ['"Inter"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script src="script.js" defer></script>
+    <script src="cart.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-deepCharcoal text-brightWhite font-body">
+    <div id="hero-bg" class="hero-bg">
+        <!-- Navigation -->
+        <nav class="sticky top-0 z-50 bg-deepCharcoal/95 backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="flex justify-between h-14 items-center">
+                    <div class="flex-shrink-0">
+                        <a href="index.html" class="text-neonPink font-heading text-xl tracking-wider hover:text-phantomTeal transition-colors duration-200">PHANTOM</a>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="index.html" class="text-brightWhite hover:text-phantomTeal text-sm font-medium tracking-wide transition-colors duration-200">HOME</a>
+                        <a href="shop.html" class="text-brightWhite hover:text-phantomTeal text-sm font-medium tracking-wide transition-colors duration-200">SHOP</a>
+                        <a href="about.html" class="text-brightWhite hover:text-phantomTeal text-sm font-medium tracking-wide transition-colors duration-200">ABOUT</a>
+                        <a href="contact.html" class="text-brightWhite hover:text-phantomTeal text-sm font-medium tracking-wide transition-colors duration-200">CONTACT</a>
+                        <button onclick="toggleCart()" class="relative text-brightWhite hover:text-phantomTeal transition-colors duration-200 p-2">
+                            <i data-feather="shopping-cart" class="w-5 h-5"></i>
+                            <span id="cart-count" class="absolute -top-1 -right-1 bg-neonPink text-deepCharcoal text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium hidden">0</span>
+                        </button>
+                        <a href="https://discord.gg/yWagcthA" target="_blank" class="bg-electricPurple hover:bg-neonPink px-3 py-1.5 text-xs font-medium tracking-wide transition-all duration-200">
+                            DISCORD
+                        </a>
+                        <a href="https://www.instagram.com/b4yox/" target="_blank" class="bg-electricPurple hover:bg-neonPink px-3 py-1.5 text-xs font-medium tracking-wide transition-all duration-200">
+                            INSTAGRAM
+                        </a>
+                    </div>
+                    <div class="md:hidden flex items-center space-x-2">
+                        <button onclick="toggleCart()" class="relative text-brightWhite hover:text-phantomTeal transition-colors duration-200 p-2">
+                            <i data-feather="shopping-cart" class="w-5 h-5"></i>
+                            <span id="cart-count-mobile" class="absolute -top-1 -right-1 bg-neonPink text-deepCharcoal text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium hidden">0</span>
+                        </button>
+                        <button class="mobile-menu-button p-2 text-brightWhite hover:text-phantomTeal focus:outline-none">
+                            <i data-feather="menu" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div class="mobile-menu hidden md:hidden bg-deepCharcoal">
+                <div class="px-6 py-4 space-y-3">
+                    <a href="index.html" class="text-brightWhite hover:text-phantomTeal block text-sm font-medium tracking-wide transition-colors duration-200">HOME</a>
+                    <a href="shop.html" class="text-brightWhite hover:text-phantomTeal block text-sm font-medium tracking-wide transition-colors duration-200">SHOP</a>
+                    <a href="about.html" class="text-brightWhite hover:text-phantomTeal block text-sm font-medium tracking-wide transition-colors duration-200">ABOUT</a>
+                    <a href="contact.html" class="text-brightWhite hover:text-phantomTeal block text-sm font-medium tracking-wide transition-colors duration-200">CONTACT</a>
+                    <a href="https://discord.gg/yWagcthA" target="_blank" class="bg-electricPurple hover:bg-neonPink block px-3 py-2 text-xs font-medium tracking-wide text-center transition-all duration-200 mt-4">
+                        DISCORD
+                    </a>
+                    <a href="https://www.instagram.com/b4yox/" target="_blank" class="bg-electricPurple hover:bg-neonPink block px-3 py-2 text-xs font-medium tracking-wide text-center transition-all duration-200 mt-4">
+                        INSTAGRAM
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="relative overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                    <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 lg:mt-16 lg:px-8 xl:mt-20">
+                        <div class="sm:text-center lg:text-left">
+                            <h1 class="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl glow-text" data-aos="fade-up">
+                                <span class="block text-neonPink">PHANTOM APPAREL</span>
+                                <span class="block text-phantomTeal">LIMITED DROPS.</span>
+                                <span class="block text-electricPurple">ZERO RULES.</span>
+                            </h1>
+                            <p class="mt-3 text-base text-brightWhite/80 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0" data-aos="fade-up" data-aos-delay="100">
+                                A brand with a story. Limited drops. Just be you.
+                            </p>
+                            <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-4" data-aos="fade-up" data-aos-delay="200">
+                                <div class="rounded-md shadow">
+                                    <a href="shop.html" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-deepCharcoal bg-phantomTeal hover:bg-electricPurple hover:text-brightWhite md:py-4 md:text-lg md:px-10 btn-glow transition-all duration-300">
+                                        SHOP NOW
+                                    </a>
+                                </div>
+                                <div class="rounded-md shadow">
+                                    <a href="https://discord.gg/yWagcthA" target="_blank" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-brightWhite bg-electricPurple/60 hover:bg-electricPurple md:py-4 md:text-lg md:px-10 btn-glow transition-all duration-300">
+                                        JOIN OUR DISCORD
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+            <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2" data-aos="fade-left">
+                <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full rounded-2xl shadow-2xl border-4 border-neonPink/30 hover:border-neonPink/60 transition-all duration-300 transform hover:scale-105" src="assets/hero.JPG" alt="Danny Phantom inspired apparel">
+            </div>
+        </div>
+
+        <!-- SA COLLECTION -->
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 py-20">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-heading tracking-tight text-neonPink sm:text-4xl glow-text" data-aos="fade-up">
+                    COLLECTIONS
+                </h2>
+                <p class="mt-4 max-w-2xl text-lg text-brightWhite/80 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Our signature pieces
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                <!-- Product 1 -->
+                <div class="group relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-full min-h-80 bg-deepCharcoal/50 rounded-md overflow-hidden group-hover:glow-box transition-all duration-300">
+                        <img src="assets/product1.jpg" alt="Spirit Hunter Hoodie" class="w-full h-full object-center object-cover group-hover:opacity-75 transition-opacity duration-300">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-brightWhite">
+                                <a href="shop.html">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    SPIRIT HUNTER HOODIE
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-brightWhite/60">Black/Neon</p>
+                        </div>
+                        <p class="text-sm font-medium text-neonPink">$64.99</p>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="group relative" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-full min-h-80 bg-deepCharcoal/50 rounded-md overflow-hidden group-hover:glow-box transition-all duration-300">
+                        <img src="assets/product2.jpg" alt="Spectral Detective Tee" class="w-full h-full object-center object-cover group-hover:opacity-75 transition-opacity duration-300">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-brightWhite">
+                                <a href="shop.html">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    SPECTRAL DETECTIVE TEE
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-brightWhite/60">White/Black</p>
+                        </div>
+                        <p class="text-sm font-medium text-neonPink">$32.99</p>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="group relative" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-full min-h-80 bg-deepCharcoal/50 rounded-md overflow-hidden group-hover:glow-box transition-all duration-300">
+                        <img src="assets/product3.jpg" alt="Phantom Apparel Snapback" class="w-full h-full object-center object-cover group-hover:opacity-75 transition-opacity duration-300">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-brightWhite">
+                                <a href="shop.html">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    PHANTOM APPAREL SNAPBACK
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-brightWhite/60">Black/Teal</p>
+                        </div>
+                        <p class="text-sm font-medium text-neonPink">$28.99</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Drops -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center">
+                <h2 class="text-3xl font-heading tracking-tight text-neonPink sm:text-4xl glow-text" data-aos="fade-up">
+                    CURRENT DROPS
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-brightWhite/80 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Limited edition streetwear with a ghostly edge
+                </p>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                <!-- Product 4 -->
+                <div class="group relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-full min-h-80 bg-deepCharcoal/50 rounded-md overflow-hidden group-hover:glow-box transition-all duration-300">
+                        <img src="assets/product4.jpg" alt="Supernatural Sweatpants" class="w-full h-full object-center object-cover group-hover:opacity-75 transition-opacity duration-300">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-brightWhite">
+                                <a href="shop.html">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    SUPERNATURAL SWEATPANTS
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-brightWhite/60">Black/Neon</p>
+                        </div>
+                        <p class="text-sm font-medium text-neonPink">$54.99</p>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="group relative" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-full min-h-80 bg-deepCharcoal/50 rounded-md overflow-hidden group-hover:glow-box transition-all duration-300">
+                        <img src="assets/product5.jpg" alt="Ghostbuster Crewneck" class="w-full h-full object-center object-cover group-hover:opacity-75 transition-opacity duration-300">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-brightWhite">
+                                <a href="shop.html">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    GHOSTBUSTER CREWNECK
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-brightWhite/60">White/Black</p>
+                        </div>
+                        <p class="text-sm font-medium text-neonPink">$58.99</p>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="group relative" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-full min-h-80 bg-deepCharcoal/50 rounded-md overflow-hidden group-hover:glow-box transition-all duration-300">
+                        <img src="assets/product6.jpg" alt="Poltergeist Socks" class="w-full h-full object-center object-cover group-hover:opacity-75 transition-opacity duration-300">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-brightWhite">
+                                <a href="shop.html">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    POLTERGEIST SOCKS
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-brightWhite/60">3-Pack</p>
+                        </div>
+                        <p class="text-sm font-medium text-neonPink">$18.99</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center" data-aos="fade-up">
+                <a href="shop.html" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-deepCharcoal bg-phantomTeal hover:bg-electricPurple hover:text-brightWhite btn-glow transition-all duration-300">
+                    VIEW ALL PRODUCTS
+                    <i data-feather="arrow-right" class="ml-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Countdown Banner -->
+        <div class="bg-gradient-to-r from-electricPurple to-neonPink py-6" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-xl font-heading text-brightWhite">NEW DROP IN:</h3>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <div class="flex space-x-4">
+                            <div class="text-center">
+                                <span class="text-3xl font-bold font-heading text-brightWhite block" id="countdown-days">07</span>
+                                <span class="text-xs text-brightWhite/80">DAYS</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-3xl font-bold font-heading text-brightWhite block" id="countdown-hours">23</span>
+                                <span class="text-xs text-brightWhite/80">HOURS</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-3xl font-bold font-heading text-brightWhite block" id="countdown-minutes">59</span>
+                                <span class="text-xs text-brightWhite/80">MINUTES</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-electricPurple bg-brightWhite hover:bg-deepCharcoal hover:text-brightWhite transition-all duration-300">
+                            GET NOTIFIED
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-deepCharcoal/50 mt-20">
+            <div class="max-w-6xl mx-auto py-8 px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="flex items-center space-x-8">
+                        <a href="index.html" class="text-sm text-brightWhite/80 hover:text-phantomTeal transition-colors duration-200">HOME</a>
+                        <a href="shop.html" class="text-sm text-brightWhite/80 hover:text-phantomTeal transition-colors duration-200">SHOP</a>
+                        <a href="contact.html" class="text-sm text-brightWhite/80 hover:text-phantomTeal transition-colors duration-200">CONTACT</a>
+                        <a href="about.html" class="text-sm text-brightWhite/80 hover:text-phantomTeal transition-colors duration-200">ABOUT</a>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex items-center space-x-4">
+                        <a href="https://www.instagram.com/b4yox/" target="_blank" class="text-brightWhite/60 hover:text-phantomTeal transition-colors duration-200">
+                            <i data-feather="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://discord.gg/yWagcthA" target="_blank" class="text-brightWhite/60 hover:text-phantomTeal transition-colors duration-200">
+                            <i data-feather="message-circle" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-6 pt-6 border-t border-brightWhite/10 text-center">
+                    <p class="text-xs text-brightWhite/40 tracking-wide">
+                        &copy; 2023 PHANTOM APPAREL
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="modalBackdrop"></div>
+        <div class="relative bg-deepCharcoal border border-electricPurple rounded-lg p-8 w-full max-w-md mx-4 shadow-xl glow-box">
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-electricPurple/20 text-electricPurple mb-4">
+                    <i data-feather="check" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-brightWhite mb-2">Success!</h3>
+                <p class="text-brightWhite/80 mb-6">You'll be the first to know when our new drop arrives.</p>
+                <button id="closeModalBtn" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-brightWhite bg-electricPurple hover:bg-electricPurple/80 transition-all duration-300">
+                    <i data-feather="x" class="mr-2"></i>
+                    CLOSE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal functionality
+            const successModal = document.getElementById('successModal');
+            const modalBackdrop = document.getElementById('modalBackdrop');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            
+            function openModal() {
+                successModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                // Re-render feather icons in case they don't show up
+                setTimeout(() => {
+                    if (window.feather) {
+                        feather.replace();
+                    }
+                }, 100);
+            }
+            
+            function closeModal() {
+                successModal.classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            }
+            
+            // Find the Get Notified button in the countdown banner
+            // Using a more reliable approach - looking for the button in the gradient banner
+            const gradientBanner = document.querySelector('.bg-gradient-to-r.from-electricPurple');
+            let getNotifiedBtn = null;
+            
+            if (gradientBanner) {
+                // Find all links in the banner
+                const links = gradientBanner.querySelectorAll('a');
+                // Find the one with 'GET NOTIFIED' text
+                links.forEach(link => {
+                    if (link.textContent.trim() === 'GET NOTIFIED') {
+                        getNotifiedBtn = link;
+                    }
+                });
+            }
+            
+            // Event listeners
+            if (getNotifiedBtn) {
+                getNotifiedBtn.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent the default link behavior
+                    openModal();
+                });
+            }
+            
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+            
+            if (modalBackdrop) {
+                modalBackdrop.addEventListener('click', closeModal);
+            }
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && successModal && !successModal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
